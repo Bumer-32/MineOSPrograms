@@ -1,0 +1,12 @@
+{
+	notStorage = "У вас немає підключеного flux сховища!",
+
+	allEnergy = "Уся flux енергія",
+	
+	input = "Вхід:",
+	output = "Вихід:",
+
+	pointCount = "Кількість точок: ",
+	plugCount = "Кількість роз'ємів: ",
+	storageCount = "Кількість сховищ: "
+}

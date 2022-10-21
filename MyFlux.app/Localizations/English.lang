@@ -1,0 +1,12 @@
+{
+	notStorage = "You do not have connected flux storage!",
+
+	allEnergy = "All flux energy",
+
+	input = "Input:",
+	output = "Output:",
+
+	pointCount = "Count of points: ",
+	plugCount = "Count of plugs: ",
+	storageCount = "Count of storage: "
+}
