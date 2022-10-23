@@ -36,7 +36,7 @@ local loop = event.addHandler(function()
 
     local Energy = window:addChild(gui.object(10, 5, 130, 5))
     Energy.draw = function(object)
-        bigLetters.drawText(object.x, object.y, 0xFFFFFF, math.floor(flux.getEnergyInfo()["totalEnergy"]) .. " " .. string.lower(flux.getNetworkInfo()["energyType"]) .. "_t")
+        bigLetters.drawText(object.x, object.y, 0xFFFFFF, math.floor(flux.getEnergyInfo()["totalEnergy"]) .. " " .. string.lower(flux.getNetworkInfo()["energyType"]))
     end
 
     input.text = flux.getEnergyInfo()["energyInput"] .. " " .. flux.getNetworkInfo()["energyType"] .. "/t"
@@ -48,4 +48,5 @@ local loop = event.addHandler(function()
 end)
 window.actionButtons.close.onTouch = function()
     event.removeHandler(loop)
+    window:remove()
 end
