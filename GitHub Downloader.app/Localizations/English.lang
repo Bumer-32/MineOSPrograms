@@ -1,0 +1,20 @@
+{
+	notInternet = "For run this program need internet card!",
+
+	nick = "Your GitHub nick",
+	repository = "Your repository name",
+
+	noNick = "You are not enterred your nick!",
+	noRepository = "You are not enterred your repository!",
+	noPath = "You are not choose your path!",
+
+	choosePath = "Choose path",
+	choose = "Choose",
+	cancel = "Cancel",
+
+	download = "Download",
+
+	requestFailed = "Request failed: %s",
+	unknownError = "Unknown error",
+	timeout = "Request failed: Connection timed out"
+}
