@@ -17,6 +17,7 @@ if component.isAvailable("flux_storage") then
 else
     gui.alert(localization.notStorage)
     window:remove()
+    return
 end
 
 window:addChild(gui.text(10, 3, 0xFFFFFF, localization.allEnergy))
