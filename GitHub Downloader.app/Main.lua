@@ -13,7 +13,7 @@ if component.isAvailable("internet") then
   internet = component.internet
 else
   GUI.alert(localization.notInternet)
-  error()
+  return
 end
 
 local workspace, window = system.addWindow(GUI.filledWindow(1, 1, 39, 23, 0x662480))
@@ -29,23 +29,24 @@ local downloadButton = window:addChild(GUI.button(5, 17, 30, 3, 0x1E1E1E, 0xA5A5
 window:addChild(GUI.text(1, window.height, 0xA5A5A5, "GitHub Dowloader V-1.0"))
 
 local function request(url, body, headers, timeout)
-  local handle, err = internet.request(url, body, headers)
+  local newUrl = url:gsub("%s", "%%20")
+  local handle, error = internet.request(newUrl, body, headers)
   
   if not handle then
-    return nil, (localization.requestFailed):format(err or localization.unknownError)
+    return nil, (localization.requestFailed):format(error or localization.unknownError)
   end
 
   local start = computer.uptime()
   
   while true do
-    local status, err = handle.finishConnect()
+    local status, error = handle.finishConnect()
     
     if status then
       break
     end
     
     if status == nil then
-      return nil, (localization.requestFailed):format(err or localization.unknownError)
+      return nil, (localization.requestFailed):format(error or localization.unknownError)
     end
     
     if computer.uptime() >= start + timeout then
@@ -65,15 +66,21 @@ local function ReadUrl(url)
   local data = ""
   progress.active = true
 
-  while true do
-    local chunk, error = handle.read()
-    if chunk then
-      data = data .. chunk
-      progress:roll()
-      workspace:draw()
-    else
-      break
+  if not error then
+    while true do
+      local chunk, error = handle.read()
+      if chunk then
+        data = data .. chunk
+        progress:roll()
+        workspace:draw()
+      else
+        break
+      end
     end
+  else
+    GUI.alert(error)
+    progress.active = false
+    return
   end
   progress.active = false
   handle.close()
@@ -81,22 +88,21 @@ local function ReadUrl(url)
   return data
 end
 
-local function download(path, url)
-  local file = ReadUrl(url)
-  filesystem.write(path, file)
-end
-
 local function downloader(url)
-  local content = json.decode(ReadUrl(url))
-  for i, content in ipairs(content) do
-    if content.type == "file" then
-      download(path.path .. repo.text .. "/" .. content.path, content.download_url)
+  local data = ReadUrl(url)
+  if data then
+    local content = json.decode(data)
+    for i, content in ipairs(content) do
+      if content.type == "file" then
+        filesystem.write(path.path .. repo.text .. "/" .. content.path, ReadUrl(content.download_url))
+      end
+      if content.type == "dir" then
+        filesystem.makeDirectory(path.path .. repo.text .. "/" .. content.path)
+        downloader(url .. content.name .. "/")
+      end
     end
-    if content.type == "dir" then
-      downloader(url .. content.name .. "/")
-    end
+    computer.pushSignal("system", "updateFileList")
   end
-  computer.pushSignal("system", "updateFileList")
 end
 
 downloadButton.onTouch = function()
@@ -113,5 +119,6 @@ downloadButton.onTouch = function()
         return
     end
     downloader("https://api.github.com/repos/" .. user.text .. "/" .. repo.text .. "/contents/") 
+    filesystem.makeDirectory(path.path .. repo.text)
     workspace:draw()
 end
