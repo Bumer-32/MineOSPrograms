@@ -33,9 +33,6 @@ local plugCount = window:addChild(gui.text(10, 19, 0xFFFFFF, localization.plugCo
 local storageCount = window:addChild(gui.text(10, 21, 0xFFFFFF, localization.storageCount .. math.floor(flux.getCountInfo()["storageCount"])))
 
 local loop = event.addHandler(function()
-    Energy:remove()
-
-    local Energy = window:addChild(gui.object(10, 5, 130, 5))
     Energy.draw = function(object)
         bigLetters.drawText(object.x, object.y, 0xFFFFFF, math.floor(flux.getEnergyInfo()["totalEnergy"]) .. " " .. string.lower(flux.getNetworkInfo()["energyType"]))
     end
