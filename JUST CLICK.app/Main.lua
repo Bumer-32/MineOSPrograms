@@ -22,7 +22,6 @@ local text1 = "Just Click Game! You should just to click!"
 window:addChild(GUI.text(math.floor((window.width/2)-(unicode.len(text1)/2)), 5, 0xFFFFFF, text1))
 local text2 = "Summ of all clicks (off all players) you can see"
 window:addChild(GUI.text(math.floor((window.width/2)-(unicode.len(text2)/2)), 6, 0xFFFFFF, text2))
-window:addChild(GUI.text(1, 6, 0xFFFFFF, text2))
 
 local Num = window:addChild(GUI.object(math.floor((window.width/2)-(unicode.len(number)*7)/2), 8, 130, 5))
 
