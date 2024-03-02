@@ -80,7 +80,7 @@ def handle_client(clientSocket):
                 clientSocket.close()
                 break
             
-            logging.info(f"new tcp message: {message}")
+            # logging.info(f"new tcp message: {message}")
 
             if message == "click":
                 global num
