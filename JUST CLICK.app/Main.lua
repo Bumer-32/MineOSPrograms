@@ -16,7 +16,8 @@ local number = 0
 
 local serverAddr = "147.185.221.18:45819"
 
-local workspace, window, menu = system.addWindow(GUI.filledWindow(1, 1, 60, 20, 0x4B4B4B))
+local workspace, window, menu = system.addWindow(GUI.filledWindow(1, 1, 140, 20, 0x4B4B4B))
+window.actionButtons.maximize:remove()
 
 local text1 = "Just Click Game! You should just to click!"
 window:addChild(GUI.text(math.floor((window.width/2)-(unicode.len(text1)/2)), 5, 0xFFFFFF, text1))
