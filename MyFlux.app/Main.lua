@@ -4,14 +4,12 @@ local event = require("Event")
 local gui = require("GUI")
 local bigLetters = require("BigLetters")
 -------------------------------------------------------------------------------
---Вікно
-local workspace, window = system.addWindow(gui.filledWindow(1, 1, 140, 23, 0x061424))
-window.actionButtons.maximize:remove() --Розгортати його не потрібно
+local _, window = system.addWindow(gui.filledWindow(1, 1, 140, 23, 0x061424))
+window.actionButtons.maximize:remove()
 
 local localization = system.getCurrentScriptLocalization()
 
-local flux = nil
-
+local flux
 if component.isAvailable("flux_storage") then
     flux = component.flux_storage
 else

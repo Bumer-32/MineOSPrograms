@@ -8,7 +8,7 @@ local json = require("JSON")
 
 local localization = system.getCurrentScriptLocalization()
 
-local internet = nil
+local internet
 if component.isAvailable("internet") then
   internet = component.internet
 else
@@ -26,7 +26,7 @@ local path = window:addChild(GUI.filesystemChooser(5, 13, 30, 3, 0x1E1E1E, 0xA5A
 path:setMode(GUI.IO_MODE_DIRECTORY)
 local downloadButton = window:addChild(GUI.button(5, 17, 30, 3, 0x1E1E1E, 0xA5A5A5, 0xA5A5A5, 0x1E1E1E, localization.download))
 
-window:addChild(GUI.text(1, window.height, 0xA5A5A5, "GitHub Dowloader V-1.0"))
+window:addChild(GUI.text(1, window.height, 0xA5A5A5, "GitHub Downloader V-1.0"))
 
 local function request(url, body, headers, timeout)
   local newUrl = url:gsub("%s", "%%20")
@@ -68,7 +68,7 @@ local function ReadUrl(url)
 
   if not error then
     while true do
-      local chunk, error = handle.read()
+      local chunk, _ = handle.read()
       if chunk then
         data = data .. chunk
         progress:roll()
@@ -92,7 +92,7 @@ local function downloader(url)
   local data = ReadUrl(url)
   if data then
     local content = json.decode(data)
-    for i, content in ipairs(content) do
+    for _, content in ipairs(content) do
       if content.type == "file" then
         filesystem.write(path.path .. repo.text .. "/" .. content.path, ReadUrl(content.download_url))
       end
