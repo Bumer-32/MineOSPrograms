@@ -14,7 +14,7 @@ end
 local previous = 0
 local number = 0
 
-local serverAddr = "147.185.221.18:45819"
+local serverAddr = "jc.lumivoid.pp.ua:28267"
 
 local workspace, window, _ = system.addWindow(GUI.filledWindow(1, 1, 140, 20, 0x4B4B4B))
 window.actionButtons.maximize:remove()
